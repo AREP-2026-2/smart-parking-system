@@ -1,0 +1,159 @@
+{
+  "models": {
+    "lstm:1": {
+      "name": "lstm-h1-v1",
+      "branch": "lstm",
+      "horizon": 1,
+      "file": "lstm-h1-v1.pt",
+      "version": "v1",
+      "val_mae": 0.023240158334374428,
+      "data_sha256": "479cd9dc8f229870"
+    },
+    "transformer:1": {
+      "name": "transformer-h1-v1",
+      "branch": "transformer",
+      "horizon": 1,
+      "file": "transformer-h1-v1.pt",
+      "version": "v1",
+      "val_mae": 0.022833874449133873,
+      "data_sha256": "479cd9dc8f229870"
+    },
+    "lstm:3": {
+      "name": "lstm-h3-v1",
+      "branch": "lstm",
+      "horizon": 3,
+      "file": "lstm-h3-v1.pt",
+      "version": "v1",
+      "val_mae": 0.03693705052137375,
+      "data_sha256": "479cd9dc8f229870"
+    },
+    "transformer:3": {
+      "name": "transformer-h3-v1",
+      "branch": "transformer",
+      "horizon": 3,
+      "file": "transformer-h3-v1.pt",
+      "version": "v1",
+      "val_mae": 0.03440020605921745,
+      "data_sha256": "479cd9dc8f229870"
+    },
+    "lstm:5": {
+      "name": "lstm-h5-v1",
+      "branch": "lstm",
+      "horizon": 5,
+      "file": "lstm-h5-v1.pt",
+      "version": "v1",
+      "val_mae": 0.044426243752241135,
+      "data_sha256": "479cd9dc8f229870"
+    },
+    "transformer:5": {
+      "name": "transformer-h5-v1",
+      "branch": "transformer",
+      "horizon": 5,
+      "file": "transformer-h5-v1.pt",
+      "version": "v1",
+      "val_mae": 0.04207410663366318,
+      "data_sha256": "479cd9dc8f229870"
+    },
+    "lstm:8": {
+      "name": "lstm-h8-v1",
+      "branch": "lstm",
+      "horizon": 8,
+      "file": "lstm-h8-v1.pt",
+      "version": "v1",
+      "val_mae": 0.04592785984277725,
+      "data_sha256": "479cd9dc8f229870"
+    },
+    "transformer:8": {
+      "name": "transformer-h8-v1",
+      "branch": "transformer",
+      "horizon": 8,
+      "file": "transformer-h8-v1.pt",
+      "version": "v1",
+      "val_mae": 0.04424353316426277,
+      "data_sha256": "479cd9dc8f229870"
+    },
+    "lstm:12": {
+      "name": "lstm-h12-v1",
+      "branch": "lstm",
+      "horizon": 12,
+      "file": "lstm-h12-v1.pt",
+      "version": "v1",
+      "val_mae": 0.04397283121943474,
+      "data_sha256": "479cd9dc8f229870"
+    },
+    "transformer:12": {
+      "name": "transformer-h12-v1",
+      "branch": "transformer",
+      "horizon": 12,
+      "file": "transformer-h12-v1.pt",
+      "version": "v1",
+      "val_mae": 0.042511310428380966,
+      "data_sha256": "479cd9dc8f229870"
+    },
+    "lstm:24": {
+      "name": "lstm-h24-v1",
+      "branch": "lstm",
+      "horizon": 24,
+      "file": "lstm-h24-v1.pt",
+      "version": "v1",
+      "val_mae": 0.04440189152956009,
+      "data_sha256": "479cd9dc8f229870"
+    },
+    "transformer:24": {
+      "name": "transformer-h24-v1",
+      "branch": "transformer",
+      "horizon": 24,
+      "file": "transformer-h24-v1.pt",
+      "version": "v1",
+      "val_mae": 0.04367842525243759,
+      "data_sha256": "479cd9dc8f229870"
+    }
+  },
+  "created_at": "2026-11-09T03:26:18+00:00",
+  "dataset_kind": "synthetic",
+  "data_sha256": "479cd9dc8f229870",
+  "tau": 0,
+  "zones": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E"
+  ],
+  "window_hours": 24,
+  "horizons": [
+    1,
+    3,
+    5,
+    8,
+    12,
+    24
+  ],
+  "step_features": [
+    "occupancy",
+    "inflow",
+    "outflow",
+    "class_change",
+    "no_class_day",
+    "rain",
+    "hour_sin",
+    "hour_cos",
+    "dow_sin",
+    "dow_cos",
+    "weekend"
+  ],
+  "target_features": [
+    "hour_sin",
+    "hour_cos",
+    "dow_sin",
+    "dow_cos",
+    "weekend",
+    "class_change",
+    "no_class_day"
+  ],
+  "split": {
+    "val_start": "2026-04-24 04:00:00",
+    "test_start": "2026-05-13 02:00:00",
+    "end": "2026-05-31 23:00:00"
+  }
+}

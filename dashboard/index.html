@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Parqueo inteligente ECI</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="page">
+  <header class="top">
+    <div>
+      <h1>Asignación dinámica de parqueaderos</h1>
+      <p class="sub">Motor predictivo híbrido LSTM con atención + Transformer · Prototipo AREP</p>
+    </div>
+    <div class="clock" aria-label="Reloj de reproducción">
+      <button id="prevHour" class="ghost" aria-label="Una hora antes">&minus;1 h</button>
+      <input id="clock" type="datetime-local" step="3600" aria-label="Instante simulado">
+      <button id="nextHour" class="ghost" aria-label="Una hora después">+1 h</button>
+    </div>
+  </header>
+
+  <p id="dataBanner" class="banner" hidden></p>
+
+  <nav class="scenarios" aria-label="Escenarios de validación">
+    <span class="label">Escenarios</span>
+    <button data-scenario="A"><b>A</b> Baja demanda</button>
+    <button data-scenario="B"><b>B</b> Cambio de clases</button>
+    <button data-scenario="C"><b>C</b> Congestión localizada</button>
+    <button data-scenario="D"><b>D</b> Necesidad especial</button>
+    <span id="scenarioText" class="muted"></span>
+  </nav>
+
+  <main class="grid">
+    <section class="card wide">
+      <div class="head">
+        <h2>Estado del parqueadero</h2>
+        <div class="legend">
+          <span><i class="spot"></i>Libre</span>
+          <span><i class="spot occupied"></i>Ocupado</span>
+          <span><i class="spot accessible"></i>Accesible</span>
+          <span><i class="spot reserved"></i>Reservado</span>
+          <span><i class="spot chosen"></i>Asignado ahora</span>
+        </div>
+      </div>
+      <div id="zones" class="zones"></div>
+    </section>
+
+    <section class="card">
+      <h2>Solicitar espacio</h2>
+      <form id="assignForm" class="form">
+        <label>Tamaño del vehículo
+          <select id="size">
+            <option value="COMPACT">Compacto</option>
+            <option value="MEDIUM" selected>Mediano</option>
+            <option value="LARGE">Grande</option>
+          </select>
+        </label>
+        <label>Llega en (horas)
+          <input id="arrival" type="number" min="0" max="23.5" step="0.5" value="0">
+        </label>
+        <label class="check"><input id="accessible" type="checkbox"> Requiere espacio accesible</label>
+        <details>
+          <summary>Pesos de la función de costo</summary>
+          <div id="weights" class="weights"></div>
+        </details>
+        <div class="row">
+          <button type="submit" class="primary">Asignar espacio</button>
+          <button type="button" id="resetBtn" class="ghost">Limpiar reservas</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="card span2">
+      <h2>Decisión del motor</h2>
+      <div id="result"><p class="muted">Solicita un espacio o carga un escenario.</p></div>
+    </section>
+
+    <section class="card wide">
+      <div class="head">
+        <h2>Pronóstico por horizonte</h2>
+        <div class="row">
+          <label class="inline">Zona <select id="forecastZone"></select></label>
+          <label class="inline">Atención a <select id="attentionHorizon"></select></label>
+        </div>
+      </div>
+      <div class="two">
+        <div>
+          <h3>Ocupación observada y prevista</h3>
+          <div id="forecastChart" class="chart"></div>
+          <details class="table-view"><summary>Ver tabla</summary><div id="forecastTable"></div></details>
+        </div>
+        <div>
+          <h3 id="attentionTitle">Pesos de atención sobre la ventana de 24 h</h3>
+          <div id="attentionChart" class="chart"></div>
+          <p class="muted small">Indica qué horas de la ventana de entrada pesaron más en la predicción.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card wide">
+      <h2>Evaluación del prototipo</h2>
+      <p id="reportNote" class="muted"></p>
+      <div id="hypotheses" class="tiles"></div>
+      <div class="two">
+        <div>
+          <h3>Error absoluto medio por horizonte (periodo de prueba)</h3>
+          <div id="maeChart" class="chart"></div>
+          <p id="maeNote" class="muted small"></p>
+          <details class="table-view"><summary>Ver tabla</summary><div id="maeTable"></div></details>
+        </div>
+        <div>
+          <h3>Hipótesis 3: asignación en hora pico simulada</h3>
+          <button id="runExperiment" class="primary">Ejecutar simulación</button>
+          <div id="experiment"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card wide">
+      <div class="head">
+        <h2>Operación y degradación controlada</h2>
+        <div class="row">
+          <label class="inline">Umbral τ activo <select id="tauSelect"></select></label>
+          <button id="backtest" class="ghost">Comparar previsto y observado (últimas 24 h)</button>
+          <button id="resetHealth" class="ghost">Restablecer ramas</button>
+        </div>
+      </div>
+      <div id="branches" class="tiles"></div>
+      <div id="healthTable"></div>
+    </section>
+  </main>
+</div>
+<div id="tooltip" class="tooltip" hidden></div>
+<div id="toast" class="toast" role="status" hidden></div>
+<script src="app.js"></script>
+</body>
+</html>

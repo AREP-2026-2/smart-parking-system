@@ -1,0 +1,27 @@
+[
+  {
+    "id": "A",
+    "name": "Zona A - Entrada principal",
+    "capacity": 120
+  },
+  {
+    "id": "B",
+    "name": "Zona B - Bloque central",
+    "capacity": 100
+  },
+  {
+    "id": "C",
+    "name": "Zona C - Laboratorios",
+    "capacity": 80
+  },
+  {
+    "id": "D",
+    "name": "Zona D - Coliseo",
+    "capacity": 90
+  },
+  {
+    "id": "E",
+    "name": "Zona E - Periferia",
+    "capacity": 110
+  }
+]

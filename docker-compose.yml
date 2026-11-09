@@ -1,0 +1,30 @@
+services:
+  prediction:
+    build: ./prediction-service
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request as u; u.urlopen('http://localhost:8000/health')"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  allocation:
+    build: ./allocation-service
+    environment:
+      DATA_DIR: /data
+      PREDICTION_URL: http://prediction:8000
+    volumes:
+      - ./data:/data:ro
+    depends_on:
+      prediction:
+        condition: service_healthy
+
+  dashboard:
+    image: nginx:1.27-alpine
+    volumes:
+      - ./dashboard:/usr/share/nginx/html:ro
+      - ./dashboard/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    ports:
+      # Los endpoints administrativos no tienen autenticación: solo se publica en este equipo.
+      - "127.0.0.1:8088:80"
+    depends_on:
+      - allocation

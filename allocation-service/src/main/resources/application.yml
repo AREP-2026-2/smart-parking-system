@@ -1,0 +1,20 @@
+server:
+  port: 8080
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+
+parking:
+  data-dir: ${DATA_DIR:../data}
+  prediction-url: ${PREDICTION_URL:http://localhost:8000}
+  # Calibración inicial por juicio experto (Sección 4.3). No se ajustó con datos.
+  weights:
+    alpha: 0.25   # D, distancia
+    beta: 0.20    # T, tiempo estimado
+    gamma: 0.15   # C, congestión
+    delta: 0.10   # I, inadecuación de tamaño
+    epsilon: 0.10 # A, accesibilidad
+    zeta: 0.20    # S, saturación prevista
